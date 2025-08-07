@@ -11,7 +11,7 @@ class CustomTextField extends StatelessWidget {
   final ValueChanged<bool>? onSuffixIconPressed;
 
   const CustomTextField({
-    Key? key,
+    super.key,
     this.hint,
     this.label,
     required this.controller,
@@ -20,7 +20,7 @@ class CustomTextField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.onSuffixIconPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ import 'home_screen.dart';
 import 'login_screen.dart';
 
 class BaseScreen extends StatelessWidget {
-  const BaseScreen({Key? key}) : super(key: key);
+  const BaseScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

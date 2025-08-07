@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class DeleteTransactionDialog extends StatefulWidget {
   final LocalTransaction? transaction;
 
-  const DeleteTransactionDialog({Key? key, this.transaction}) : super(key: key);
+  const DeleteTransactionDialog({super.key, this.transaction});
 
   @override
   State<DeleteTransactionDialog> createState() => _DeleteTransactionDialogState();
@@ -29,7 +29,7 @@ class _DeleteTransactionDialogState extends State<DeleteTransactionDialog> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                content: Text(
+                content: const Text(
                     'you sure you want to delete this category'),
                 actions: [
                   TextButton(
@@ -44,12 +44,12 @@ class _DeleteTransactionDialogState extends State<DeleteTransactionDialog> {
                         });
                         Navigator.pop(context);
                       },
-                      child: Text('yes')),
+                      child: const Text('yes')),
                   TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('no'))
+                      child: const Text('no'))
                 ],
               );
             });

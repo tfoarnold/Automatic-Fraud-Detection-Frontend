@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class AddTransaction extends StatefulWidget {
-  const AddTransaction({Key? key}) : super(key: key);
+  const AddTransaction({super.key});
 
   @override
   State<AddTransaction> createState() => _AddTransactionState();
@@ -29,7 +29,7 @@ class _AddTransactionState extends State<AddTransaction> {
     final authProvider = Provider.of<AuthProvider>(context);
 
     return Container(
-      padding: EdgeInsets.all(25),
+      padding: const EdgeInsets.all(25),
       height: size.height * 0.5,
       color: Colors.white,
       child: Column(
@@ -99,7 +99,7 @@ class _AddTransactionState extends State<AddTransaction> {
           // CustomTextField(controller: _date,hint: 'Date',),
           MaterialButton(
               color: Colors.blueAccent,
-              child: Text('Add Transaction',style: TextStyle(
+              child: const Text('Add Transaction',style: TextStyle(
                 color: Colors.white
               ),),
               onPressed: () async {

@@ -2,12 +2,11 @@ import 'package:automatic_fraud_detection/models/category.dart';
 import 'package:automatic_fraud_detection/widgets/delete_category_dialog.dart';
 import 'package:automatic_fraud_detection/widgets/edit_category_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class CategoryItem extends StatelessWidget {
   final LocalCategory? categroy;
   final bool? isEven;
-  const CategoryItem({Key? key, this.categroy, this.isEven}) : super(key: key);
+  const CategoryItem({super.key, this.categroy, this.isEven});
 
   @override
   Widget build(BuildContext context) {

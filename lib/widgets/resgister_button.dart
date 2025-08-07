@@ -7,7 +7,7 @@ class RegisterButton extends StatelessWidget {
   final TextEditingController name;
   final TextEditingController phone;
   final TextEditingController password;
-  const RegisterButton({Key? key, required this.name, required this.phone, required this.password}) : super(key: key);
+  const RegisterButton({super.key, required this.name, required this.phone, required this.password});
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +30,6 @@ class RegisterButton extends StatelessWidget {
                     name.text, phone.text as int, password.text);
               }),
         ),
-        TextButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed('/LoginScreen');
-            },
-            child: const Text(
-              'Login',
-              style: TextStyle(color: Colors.blueAccent),
-            ))
       ],
     );
   }

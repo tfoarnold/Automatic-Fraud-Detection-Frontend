@@ -3,33 +3,33 @@
   "packages": [
     {
       "name": "async",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/async-2.11.0",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/async-2.13.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.4"
     },
     {
       "name": "boolean_selector",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/boolean_selector-2.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.1"
     },
     {
       "name": "characters",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/characters-1.3.0",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/characters-1.4.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.4"
     },
     {
       "name": "clock",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/clock-1.1.1",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/clock-1.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.4"
     },
     {
       "name": "collection",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/collection-1.18.0",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/collection-1.19.1",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.4"
     },
     {
       "name": "cupertino_icons",
@@ -39,9 +39,9 @@
     },
     {
       "name": "fake_async",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/fake_async-1.3.1",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/fake_async-1.3.3",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.3"
     },
     {
       "name": "ffi",
@@ -59,7 +59,7 @@
       "name": "flutter",
       "rootUri": "file:///home/tfoa_2/snap/flutter/common/flutter/packages/flutter",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.7"
     },
     {
       "name": "flutter_lints",
@@ -68,52 +68,16 @@
       "languageVersion": "3.1"
     },
     {
-      "name": "flutter_secure_storage",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/flutter_secure_storage-8.1.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_secure_storage_linux",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/flutter_secure_storage_linux-1.2.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_secure_storage_macos",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/flutter_secure_storage_macos-3.1.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_secure_storage_platform_interface",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/flutter_secure_storage_platform_interface-1.1.2",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_secure_storage_web",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/flutter_secure_storage_web-1.2.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "flutter_secure_storage_windows",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/flutter_secure_storage_windows-2.1.1",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "flutter_test",
       "rootUri": "file:///home/tfoa_2/snap/flutter/common/flutter/packages/flutter_test",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.7"
     },
     {
       "name": "flutter_web_plugins",
       "rootUri": "file:///home/tfoa_2/snap/flutter/common/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.7"
     },
     {
       "name": "http",
@@ -129,33 +93,27 @@
     },
     {
       "name": "intl",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/intl-0.18.1",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/intl-0.20.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "js",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/js-0.6.7",
-      "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.3"
     },
     {
       "name": "leak_tracker",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/leak_tracker-10.0.0",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/leak_tracker-10.0.9",
       "packageUri": "lib/",
-      "languageVersion": "3.1"
+      "languageVersion": "3.2"
     },
     {
       "name": "leak_tracker_flutter_testing",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-2.0.1",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-3.0.9",
       "packageUri": "lib/",
-      "languageVersion": "3.1"
+      "languageVersion": "3.2"
     },
     {
       "name": "leak_tracker_testing",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/leak_tracker_testing-2.0.1",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/leak_tracker_testing-3.0.1",
       "packageUri": "lib/",
-      "languageVersion": "3.1"
+      "languageVersion": "3.2"
     },
     {
       "name": "lints",
@@ -165,19 +123,19 @@
     },
     {
       "name": "matcher",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/matcher-0.12.16+1",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/matcher-0.12.17",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.4"
     },
     {
       "name": "material_color_utilities",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/material_color_utilities-0.8.0",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/material_color_utilities-0.11.1",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "meta",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/meta-1.11.0",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/meta-1.16.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -189,9 +147,9 @@
     },
     {
       "name": "path",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/path-1.9.0",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/path-1.9.1",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.4"
     },
     {
       "name": "path_provider_linux",
@@ -275,43 +233,43 @@
       "name": "sky_engine",
       "rootUri": "file:///home/tfoa_2/snap/flutter/common/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.7"
     },
     {
       "name": "source_span",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/source_span-1.10.0",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/source_span-1.10.1",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.1"
     },
     {
       "name": "stack_trace",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/stack_trace-1.11.1",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/stack_trace-1.12.1",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.4"
     },
     {
       "name": "stream_channel",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/stream_channel-2.1.2",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/stream_channel-2.1.4",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.3"
     },
     {
       "name": "string_scanner",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/string_scanner-1.2.0",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/string_scanner-1.4.1",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.1"
     },
     {
       "name": "term_glyph",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/term_glyph-1.2.1",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/term_glyph-1.2.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.1"
     },
     {
       "name": "test_api",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/test_api-0.6.1",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/test_api-0.7.4",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.5"
     },
     {
       "name": "typed_data",
@@ -327,9 +285,9 @@
     },
     {
       "name": "vm_service",
-      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/vm_service-13.0.0",
+      "rootUri": "file:///home/tfoa_2/.pub-cache/hosted/pub.dev/vm_service-15.0.0",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.3"
     },
     {
       "name": "web",
@@ -350,7 +308,9 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2025-08-01T23:38:31.258747Z",
   "generator": "pub",
-  "generatorVersion": "3.3.0"
+  "generatorVersion": "3.8.1",
+  "flutterRoot": "file:///home/tfoa_2/snap/flutter/common/flutter",
+  "flutterVersion": "3.32.8",
+  "pubCache": "file:///home/tfoa_2/.pub-cache"
 }

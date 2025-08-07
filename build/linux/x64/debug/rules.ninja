@@ -22,7 +22,7 @@ rule CUSTOM_COMMAND
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__automatic_fraud_detection
+rule CXX_COMPILER__automatic-fraud-detection-frontend
   depfile = $DEP_FILE
   deps = gcc
   command = /snap/flutter/current/usr/bin/clang++  $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -32,7 +32,7 @@ rule CXX_COMPILER__automatic_fraud_detection
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__automatic_fraud_detection
+rule CXX_EXECUTABLE_LINKER__automatic-fraud-detection-frontend
   command = $PRE_LINK && /snap/flutter/current/usr/bin/clang++  $FLAGS  $LINK_FLAGS $in  -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT
@@ -42,7 +42,7 @@ rule CXX_EXECUTABLE_LINKER__automatic_fraud_detection
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /snap/flutter/149/usr/bin/cmake -S"/home/tfoa_2/Documents/ProjetLocalHost/Projet IAData science/Frontend/Automatic_Fraud_Detection/linux" -B"/home/tfoa_2/Documents/ProjetLocalHost/Projet IAData science/Frontend/Automatic_Fraud_Detection/build/linux/x64/debug"
+  command = /snap/flutter/149/usr/bin/cmake -S"/home/tfoa_2/Documents/ProjetLocalHost/Projet IAData science/Automatic-Fraud-Detection-Frontend/linux" -B"/home/tfoa_2/Documents/ProjetLocalHost/Projet IAData science/Automatic-Fraud-Detection-Frontend/build/linux/x64/debug"
   description = Re-running CMake...
   generator = 1
 

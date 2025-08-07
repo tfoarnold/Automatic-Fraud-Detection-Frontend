@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 import '../models/transaction.dart';
 import 'delete_transaction_dialog.dart';
@@ -10,7 +9,7 @@ class TransactionItem extends StatelessWidget {
   final LocalTransaction? transaction;
   final bool? isEven;
 
-  const TransactionItem({Key? key, required this.transaction, this.isEven,}) : super(key: key);
+  const TransactionItem({super.key, required this.transaction, this.isEven,});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class TransactionItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                      '${transaction!.id} ${transaction!.description ?? 'null'}', style: TextStyle(
+                      '${transaction!.id} ${transaction!.description ?? 'null'}', style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold
           ),),
@@ -45,7 +44,7 @@ class TransactionItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(transaction!.amount.toString(), style: TextStyle(
+                      Text(transaction!.amount.toString(), style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold
                       ),),

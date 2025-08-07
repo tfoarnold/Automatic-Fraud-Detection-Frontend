@@ -1,7 +1,6 @@
 
 
 import 'package:automatic_fraud_detection/models/category.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +10,7 @@ import '../providers/categories_provider.dart';
 
 class EditCategoryDialog extends StatefulWidget {
   final LocalCategory? category;
-  const EditCategoryDialog({Key? key, this.category}) : super(key: key);
+  const EditCategoryDialog({super.key, this.category});
 
   @override
   State<EditCategoryDialog> createState() => _EditCategoryDialogState();
@@ -28,7 +27,7 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
     final authProvider = Provider.of<AuthProvider>(context);
 
     return  IconButton(
-      icon: Icon(Icons.edit,color: Colors.purple,),
+      icon: const Icon(Icons.edit,color: Colors.purple,),
       onPressed: () {
         setState(() {
          nameController!.text =
@@ -38,7 +37,7 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
             context: context,
             builder: (context) {
               return Container(
-                padding: EdgeInsets.all(50),
+                padding: const EdgeInsets.all(50),
                 height: size.height * 0.3,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -75,7 +74,7 @@ class _EditCategoryDialogState extends State<EditCategoryDialog> {
                     ),
                     MaterialButton(
                       color: Colors.purple,
-                      child: Text(
+                      child: const Text(
                         'Edit',
                         style: TextStyle(
                             color: Colors.white),

@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class DeleteCategoryDialog extends StatefulWidget {
   final LocalCategory? category;
 
-  const DeleteCategoryDialog({Key? key, this.category}) : super(key: key);
+  const DeleteCategoryDialog({super.key, this.category});
 
   @override
   State<DeleteCategoryDialog> createState() => _DeleteCategoryDialogState();

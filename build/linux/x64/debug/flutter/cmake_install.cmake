@@ -1,8 +1,8 @@
-# Install script for directory: /home/tfoa_2/Documents/ProjetLocalHost/Projet IAData science/Frontend/Automatic_Fraud_Detection/linux/flutter
+# Install script for directory: /home/tfoa_2/Documents/ProjetLocalHost/Projet IAData science/Automatic-Fraud-Detection-Frontend/linux/flutter
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/tfoa_2/Documents/ProjetLocalHost/Projet IAData science/Frontend/Automatic_Fraud_Detection/build/linux/x64/debug/bundle")
+  set(CMAKE_INSTALL_PREFIX "/home/tfoa_2/Documents/ProjetLocalHost/Projet IAData science/Automatic-Fraud-Detection-Frontend/build/linux/x64/debug/bundle")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

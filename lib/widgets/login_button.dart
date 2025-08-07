@@ -6,7 +6,7 @@ import '../providers/auth_provider.dart';
 class LoginButton extends StatelessWidget {
   final TextEditingController phone;
   final TextEditingController password;
-  const LoginButton({Key? key, required this.phone, required this.password}) : super(key: key);
+  const LoginButton({super.key, required this.phone, required this.password});
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +28,6 @@ class LoginButton extends StatelessWidget {
                 authProvider.login( phone.text.toString(),password.text.toString(),context);
               }),
         ),
-        TextButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed('/RegisterScreen');
-            },
-            child: const Text(
-              'Register',
-              style:  TextStyle(color: Colors.blueAccent),
-            ))
       ],
     );
   }

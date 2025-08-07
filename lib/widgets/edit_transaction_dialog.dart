@@ -1,6 +1,5 @@
 
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +12,7 @@ import '../providers/transactions_provider.dart';
 
 class EditTransactionDialog extends StatefulWidget {
   final LocalTransaction? transaction;
-  const EditTransactionDialog({Key? key, this.transaction}) : super(key: key);
+  const EditTransactionDialog({super.key, this.transaction});
 
   @override
   State<EditTransactionDialog> createState() => _EditTransactionDialogState();
@@ -33,7 +32,7 @@ class _EditTransactionDialogState extends State<EditTransactionDialog> {
     final authProvider = Provider.of<AuthProvider>(context);
 
     return  IconButton(
-      icon: Icon(Icons.edit,color: Colors.purple,),
+      icon: const Icon(Icons.edit,color: Colors.purple,),
 
       onPressed: () {
         setState(() {
@@ -46,7 +45,7 @@ class _EditTransactionDialogState extends State<EditTransactionDialog> {
             context: context,
             builder: (context) {
               return Container(
-                padding: EdgeInsets.all(50),
+                padding: const EdgeInsets.all(50),
                 height: size.height * 0.5,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
@@ -165,7 +164,7 @@ class _EditTransactionDialogState extends State<EditTransactionDialog> {
                     ),
                     MaterialButton(
                       color: Colors.purple,
-                      child: Text(
+                      child: const Text(
                         'Edit',
                         style: TextStyle(
                             color: Colors.white),
