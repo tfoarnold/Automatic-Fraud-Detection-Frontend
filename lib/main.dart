@@ -18,28 +18,49 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AuthProvider(),
-      child: Consumer<AuthProvider>(builder: (context, auth, child) {
-        return MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (context) => CategoriesProvider()),
-            ChangeNotifierProvider(create: (context) => TransactionsProvider()),
-            ChangeNotifierProvider(create: (context) => AuthProvider()),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => CategoriesProvider()),
+        ChangeNotifierProvider(create: (context) => TransactionsProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Fraud Detection App',
+        routes: {
+          '/LoginScreen': (context) => const LoginScreen(),
+          '/RegisterScreen': (context) => const RegisterScreen(),
+          '/HomeScreen': (context) => const HomeScreen(),
+          '/CategoriesScreen': (context) => const CategoriesScreen(),
+        },
+        home: const BaseScreen(),
+      ),
+    );
+  }
+}
+
+// Widget de chargement global pour les états d'attente
+class LoadingWidget extends StatelessWidget {
+  final String message;
+  
+  const LoadingWidget({super.key, this.message = 'Chargement...'});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const CircularProgressIndicator(),
+            const SizedBox(height: 16),
+            Text(
+              message,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
           ],
-          child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              initialRoute: '/HomeScreen',
-              routes: {
-                '/LoginScreen': (context) => const LoginScreen(),
-                '/RegisterScreen': (context) => const RegisterScreen(),
-                '/HomeScreen': (context) => const HomeScreen(),
-                '/CategoriesScreen': (context) => const CategoriesScreen(),
-              },
-              home: const BaseScreen()
-          ),
-        );
-      }),
+        ),
+      ),
     );
   }
 }

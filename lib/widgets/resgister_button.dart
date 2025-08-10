@@ -27,7 +27,7 @@ class RegisterButton extends StatelessWidget {
               ),
               onPressed: () {
                 authProvider.register(
-                    name.text, phone.text as int, password.text);
+                    name.text, phone.text , password.text);
               }),
         ),
       ],

@@ -7,7 +7,10 @@ import 'package:http/http.dart' as http;
 
 class CategoriesProvider with ChangeNotifier {
   List<LocalCategory> categories = [];
-  String baseUrl = 'http://127.0.0.1:8000/api';
+  // String baseUrl = 'http://127.0.0.1:8000';
+  // String baseUrl = 'http://10.0.2.2:8000';
+  String baseUrl = 'http://192.168.47.219:8000/'; // Pour appareil physique
+
 
   changDropDownValue() {}
   getCategories(String token) async {

@@ -1,6 +1,7 @@
 import 'package:automatic_fraud_detection/providers/auth_provider.dart';
 import 'package:automatic_fraud_detection/widgets/custom_text_field.dart';
 import 'package:automatic_fraud_detection/widgets/login_button.dart';
+import 'package:automatic_fraud_detection/main.dart'; // Pour accéder à LoadingWidget
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,9 +18,22 @@ class _LoginScreenState extends State<LoginScreen> {
   bool obscurePass = true;
 
   @override
+  void dispose() {
+    // Libère la mémoire utilisée par les contrôleurs
+    _phone.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final authProvider = Provider.of<AuthProvider>(context);
+
+    // Si le provider est en train de traiter (connexion), on affiche le widget de chargement
+    if (authProvider.isLoading) {
+      return const LoadingWidget(message: "Connexion en cours...");
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
