@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
-        ChangeNotifierProvider(create: (context) => CategoriesProvider()),
+        // ChangeNotifierProvider(create: (context) => CategoriesProvider()),
         ChangeNotifierProvider(create: (context) => TransactionsProvider()),
       ],
       child: MaterialApp(
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           '/LoginScreen': (context) => const LoginScreen(),
           '/RegisterScreen': (context) => const RegisterScreen(),
           '/HomeScreen': (context) => const HomeScreen(),
-          '/CategoriesScreen': (context) => const CategoriesScreen(),
+          // '/CategoriesScreen': (context) => const CategoriesScreen(),
         },
         home: const BaseScreen(),
       ),

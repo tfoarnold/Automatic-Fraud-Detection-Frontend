@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:automatic_fraud_detection/providers/auth_provider.dart';
 import 'package:automatic_fraud_detection/screens/profil_screen.dart';
 import 'package:automatic_fraud_detection/screens/transaction_screen.dart';
 import 'deposit_screen.dart';
@@ -75,26 +77,36 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildWelcomeSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Hi, John!',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          'How are you today?',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey[600],
-          ),
-        ),
-      ],
+    Widget _buildWelcomeSection() {
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, child) {
+        // Extraire juste le prénom du nom complet
+        String displayName = authProvider.userName;
+        if (displayName.contains(' ')) {
+          displayName = displayName.split(' ').first;
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Hi, $displayName!',
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 5),
+            Text(
+              'How are you today?',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

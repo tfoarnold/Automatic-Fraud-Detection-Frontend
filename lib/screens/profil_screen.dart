@@ -54,40 +54,62 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget _buildProfileHeader() {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 50,
-          backgroundColor: Colors.blue[100],
-          child: const Icon(Icons.person, size: 50, color: Colors.blue),
-        ),
-        const SizedBox(height: 15),
-        const Text(
-          'John Doe',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          'john.doe@example.com',
-          style: TextStyle(color: Colors.grey[600]),
-        ),
-        const SizedBox(height: 10),
-        OutlinedButton(
-          onPressed: () {
-            // Éditer le profil
-          },
-          style: OutlinedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, child) {
+        // Générer l'initiale du nom pour l'avatar
+        String initial = 'U'; // U pour Utilisateur par défaut
+        String fullName = authProvider.userName;
+        String displayPhone = authProvider.userPhone;
+
+        if (fullName.isNotEmpty) {
+          initial = fullName[0].toUpperCase();
+        }
+
+        return Column(
+          children: [
+            CircleAvatar(
+              radius: 50,
+              backgroundColor: Colors.blue[100],
+              child: fullName.isNotEmpty
+                  ? Text(
+                      initial,
+                      style: const TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
+                    )
+                  : const Icon(Icons.person, size: 50, color: Colors.blue),
             ),
-            side: BorderSide(color: Colors.blue[800]!),
-          ),
-          child: Text(
-            'Éditer le profil',
-            style: TextStyle(color: Colors.blue[800]),
-          ),
-        ),
-      ],
+            const SizedBox(height: 15),
+            Text(
+              fullName.isNotEmpty ? fullName : 'Utilisateur',
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 5),
+            Text(
+              displayPhone.isNotEmpty ? displayPhone : 'Numéro non renseigné',
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+            const SizedBox(height: 10),
+            OutlinedButton(
+              onPressed: () {
+                // Éditer le profil
+              },
+              style: OutlinedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                side: BorderSide(color: Colors.blue[800]!),
+              ),
+              child: Text(
+                'Éditer le profil',
+                style: TextStyle(color: Colors.blue[800]),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

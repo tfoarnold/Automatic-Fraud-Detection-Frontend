@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../services/api_service.dart';
 
 class AuthProvider with ChangeNotifier {
   bool isAuthenticated = false;
@@ -11,10 +12,6 @@ class AuthProvider with ChangeNotifier {
   String error = '';
   Map<String, dynamic>? userData;
   
-  // URL de base mise à jour pour correspondre à Django
-  // String baseUrl = 'http://127.0.0.1:8000'; 
-  // String baseUrl = 'http://10.0.2.2:8000'; // Pour Android Emulator
-  String baseUrl = 'http://192.168.47.219:8000'; // Pour appareil physique
 
 
   void _setLoading(bool loading) {
@@ -133,6 +130,7 @@ class AuthProvider with ChangeNotifier {
         if (context.mounted) {
           Navigator.of(context).pushReplacementNamed('/HomeScreen');
         }
+        // print('Token reçu: $token');
         return true;
       } else {
         _setLoading(false);
@@ -221,5 +219,6 @@ class AuthProvider with ChangeNotifier {
   
   // Getters utiles
   String get userName => userData?['name'] ?? 'Utilisateur';
+  String get userEmail => userData?['email'] ?? '';
   String get userPhone => userData?['phone'] ?? '';
 }
