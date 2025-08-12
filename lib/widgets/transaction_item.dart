@@ -1,66 +1,66 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+// import 'package:flutter/material.dart';
+// import 'package:intl/intl.dart';
 
-import '../models/transaction.dart';
-import 'delete_transaction_dialog.dart';
-import 'edit_transaction_dialog.dart';
+// import '../models/transaction.dart';
+// import 'delete_transaction_dialog.dart';
+// import 'edit_transaction_dialog.dart';
 
-class TransactionItem extends StatelessWidget {
-  final LocalTransaction? transaction;
-  final bool? isEven;
+// class TransactionItem extends StatelessWidget {
+//   final LocalTransaction? transaction;
+//   final bool? isEven;
 
-  const TransactionItem({super.key, required this.transaction, this.isEven,});
+//   const TransactionItem({super.key, required this.transaction, this.isEven,});
 
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    String formattedDate = DateFormat('yyyy/MM/dd, kk:mm')
-        .format(transaction!.transactionDate ?? DateTime.now());
+//   @override
+//   Widget build(BuildContext context) {
+//     final size = MediaQuery.of(context).size;
+//     String formattedDate = DateFormat('yyyy/MM/dd, kk:mm')
+//         .format(transaction!.transactionDate ?? DateTime.now());
 
-    return Center(
-      child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          // width: size.width * 0.95,
-          height: size.height * 0.15,
-          color:  isEven! ?  Colors.white :  Colors.black26,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                      '${transaction!.id} ${transaction!.description ?? 'null'}', style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold
-          ),),
-                  Text('category: ${transaction!.categoryName ?? 'null'}'),
-                ],
-              ),
-              Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(transaction!.amount.toString(), style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold
-                      ),),
-                      Text(formattedDate),
-                    ],
-                  ),
-                  DeleteTransactionDialog(
-                    transaction: transaction!,
-                  ),
-                  EditTransactionDialog(
-                    transaction: transaction!,
-                  ),
-                ],
-              ),
-            ],
-          )),
-    );
-  }
-}
+//     return Center(
+//       child: Container(
+//           padding: const EdgeInsets.symmetric(horizontal: 20),
+//           // width: size.width * 0.95,
+//           height: size.height * 0.15,
+//           color:  isEven! ?  Colors.white :  Colors.black26,
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             children: [
+//               Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   Text(
+//                       '${transaction!.id} ${transaction!.description ?? 'null'}', style: const TextStyle(
+//               fontSize: 20,
+//               fontWeight: FontWeight.bold
+//           ),),
+//                   Text('category: ${transaction!.categoryName ?? 'null'}'),
+//                 ],
+//               ),
+//               Row(
+//                 children: [
+//                   Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       Text(transaction!.amount.toString(), style: const TextStyle(
+//                           fontSize: 20,
+//                           fontWeight: FontWeight.bold
+//                       ),),
+//                       Text(formattedDate),
+//                     ],
+//                   ),
+//                   DeleteTransactionDialog(
+//                     transaction: transaction!,
+//                   ),
+//                   EditTransactionDialog(
+//                     transaction: transaction!,
+//                   ),
+//                 ],
+//               ),
+//             ],
+//           )),
+//     );
+//   }
+// }

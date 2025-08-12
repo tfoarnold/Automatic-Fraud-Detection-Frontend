@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:automatic_fraud_detection/providers/auth_provider.dart';
+import 'package:automatic_fraud_detection/providers/transactions_provider.dart';
+import '../models/transaction.dart';
 
 class TransactionsScreen extends StatefulWidget {
   const TransactionsScreen({super.key});
@@ -10,53 +14,33 @@ class TransactionsScreen extends StatefulWidget {
 
 class _TransactionsScreenState extends State<TransactionsScreen> {
   int _selectedFilter = 0; // 0=Toutes, 1=Frauduleuses, 2=Normales
-  final List<Map<String, dynamic>> _allTransactions = [
-    {
-      'id': 'TX1001',
-      'amount': 1250.00,
-      'recipient': 'John Smith',
-      'date': DateTime.now().subtract(const Duration(days: 2)),
-      'isFraud': true,
-      'type': 'Transfert',
-      'account': '••••7890'
-    },
-    {
-      'id': 'TX1002',
-      'amount': 320.50,
-      'recipient': 'Sarah Johnson',
-      'date': DateTime.now().subtract(const Duration(days: 1)),
-      'isFraud': false,
-      'type': 'Dépôt',
-      'account': '••••3456'
-    },
-    {
-      'id': 'TX1003',
-      'amount': 875.00,
-      'recipient': 'Unknown',
-      'date': DateTime.now().subtract(const Duration(hours: 5)),
-      'isFraud': true,
-      'type': 'Retrait',
-      'account': '••••9012'
-    },
-    {
-      'id': 'TX1004',
-      'amount': 42.30,
-      'recipient': 'Amazon Market',
-      'date': DateTime.now().subtract(const Duration(hours: 2)),
-      'isFraud': false,
-      'type': 'Paiement',
-      'account': '••••5678'
-    },
-  ];
 
-  List<Map<String, dynamic>> get _filteredTransactions {
+  @override
+  void initState() {
+    super.initState();
+    // Charger les transactions au démarrage
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadTransactions();
+    });
+  }
+
+  void _loadTransactions() {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final transactionsProvider = Provider.of<TransactionsProvider>(context, listen: false);
+    
+    if (authProvider.token.isNotEmpty) {
+      transactionsProvider.getTransactions(authProvider.token);
+    }
+  }
+
+  List<LocalTransaction> _getFilteredTransactions(List<LocalTransaction> allTransactions) {
     switch (_selectedFilter) {
       case 1:
-        return _allTransactions.where((txn) => txn['isFraud'] == true).toList();
+        return allTransactions.where((txn) => txn.isFraudulent).toList();
       case 2:
-        return _allTransactions.where((txn) => txn['isFraud'] == false).toList();
+        return allTransactions.where((txn) => !txn.isFraudulent).toList();
       default:
-        return _allTransactions;
+        return allTransactions;
     }
   }
 
@@ -67,19 +51,75 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         title: const Text('Analyse des Transactions'),
         backgroundColor: Colors.blue[800],
         elevation: 0,
-      ),
-      body: Column(
-        children: [
-          _buildFilterBar(),
-          Expanded(
-            child: _buildTransactionList(),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _loadTransactions,
           ),
         ],
+      ),
+      body: Consumer<TransactionsProvider>(
+        builder: (context, transactionsProvider, child) {
+          if (transactionsProvider.isLoading) {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text('Chargement des transactions...'),
+                ],
+              ),
+            );
+          }
+
+          if (transactionsProvider.error.isNotEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.error_outline,
+                    size: 50,
+                    color: Colors.red[300],
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    transactionsProvider.error,
+                    style: TextStyle(color: Colors.red[600]),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: _loadTransactions,
+                    child: const Text('Réessayer'),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          final filteredTransactions = _getFilteredTransactions(
+            transactionsProvider.transactions
+          );
+
+          return Column(
+            children: [
+              _buildFilterBar(transactionsProvider.transactions),
+              Expanded(
+                child: _buildTransactionList(filteredTransactions),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 
-  Widget _buildFilterBar() {
+  Widget _buildFilterBar(List<LocalTransaction> allTransactions) {
+    final fraudCount = allTransactions.where((txn) => txn.isFraudulent).length;
+    final normalCount = allTransactions.where((txn) => !txn.isFraudulent).length;
+    
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       decoration: BoxDecoration(
@@ -95,9 +135,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildFilterButton('Toutes', 0),
-          _buildFilterButton('Frauduleuses', 1),
-          _buildFilterButton('Normales', 2),
+          _buildFilterButton('Toutes (${allTransactions.length})', 0),
+          _buildFilterButton('Frauduleuses ($fraudCount)', 1),
+          _buildFilterButton('Normales ($normalCount)', 2),
         ],
       ),
     );
@@ -113,7 +153,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
             backgroundColor: isSelected
                 ? index == 1
                 ? Colors.red[50]
-                : Colors.green[50]
+                : index == 2 
+                ? Colors.green[50]
+                : Colors.blue[50]
                 : Colors.grey[50],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
@@ -121,7 +163,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                 color: isSelected
                     ? index == 1
                     ? Colors.red[200]!
-                    : Colors.green[200]!
+                    : index == 2
+                    ? Colors.green[200]!
+                    : Colors.blue[200]!
                     : Colors.grey[200]!,
               ),
             ),
@@ -138,9 +182,12 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
               color: isSelected
                   ? index == 1
                   ? Colors.red[800]
-                  : Colors.green[800]
+                  : index == 2
+                  ? Colors.green[800]
+                  : Colors.blue[800]
                   : Colors.grey[600],
               fontWeight: FontWeight.bold,
+              fontSize: 12,
             ),
           ),
         ),
@@ -148,8 +195,8 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
     );
   }
 
-  Widget _buildTransactionList() {
-    if (_filteredTransactions.isEmpty) {
+  Widget _buildTransactionList(List<LocalTransaction> filteredTransactions) {
+    if (filteredTransactions.isEmpty) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -163,7 +210,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
             Text(
               _selectedFilter == 1
                   ? 'Aucune transaction frauduleuse'
-                  : 'Aucune transaction normale',
+                  : _selectedFilter == 2
+                  ? 'Aucune transaction normale'
+                  : 'Aucune transaction trouvée',
               style: TextStyle(
                 color: Colors.grey[500],
                 fontSize: 16,
@@ -174,23 +223,35 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
       );
     }
 
-    return ListView.builder(
-      padding: const EdgeInsets.only(top: 10),
-      itemCount: _filteredTransactions.length,
-      itemBuilder: (context, index) {
-        final txn = _filteredTransactions[index];
-        return _buildTransactionCard(txn);
+    return RefreshIndicator(
+      onRefresh: () async {
+        _loadTransactions();
       },
+      child: ListView.builder(
+        padding: const EdgeInsets.only(top: 10),
+        itemCount: filteredTransactions.length,
+        itemBuilder: (context, index) {
+          final txn = filteredTransactions[index];
+          return _buildTransactionCard(txn);
+        },
+      ),
     );
   }
 
-  Widget _buildTransactionCard(Map<String, dynamic> transaction) {
-    final isFraud = transaction['isFraud'] as bool;
-    final amount = transaction['amount'] as double;
-    final date = transaction['date'] as DateTime;
-    final type = transaction['type'] as String;
-    final recipient = transaction['recipient'] as String;
-    final account = transaction['account'] as String;
+  Widget _buildTransactionCard(LocalTransaction transaction) {
+    final isFraud = transaction.isFraudulent;
+    final amount = double.tryParse(transaction.amount ?? '0') ?? 0.0;
+    
+    // Parser la date
+    DateTime date;
+    try {
+      date = transaction.transactionDate ?? DateTime.now();
+    } catch (e) {
+      date = DateTime.now();
+    }
+
+    final type = transaction.typeDisplay; // Utilise le getter du nouveau modèle
+    final recipient = transaction.description ?? transaction.reference ?? 'Description non disponible';
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
@@ -201,7 +262,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () {
-          // Action lorsqu'on clique sur une transaction
+          _showTransactionDetails(transaction);
         },
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -238,7 +299,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                   Text(
                     '${amount >= 0 ? '+' : ''}\$${amount.abs().toStringAsFixed(2)}',
                     style: TextStyle(
-                      color: isFraud ? Colors.red : Colors.green,
+                      color: isFraud ? Colors.red : (amount >= 0 ? Colors.green : Colors.orange),
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
@@ -248,12 +309,15 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
               const SizedBox(height: 12),
               Divider(height: 1, color: Colors.grey[200]),
               const SizedBox(height: 12),
-              _buildDetailRow('Destinataire', recipient),
-              _buildDetailRow('Compte', account),
+              _buildDetailRow('Description', recipient),
+              _buildDetailRow('Référence', transaction.reference ?? 'N/A'),
+              _buildDetailRow('Type', transaction.typeDisplay),
               _buildDetailRow(
                 'Date',
                 DateFormat('dd MMM yyyy - HH:mm').format(date),
               ),
+              if (transaction.confidenceScore != null)
+                _buildDetailRow('Score de confiance', '${(transaction.confidenceScore! * 100).toStringAsFixed(1)}%'),
               if (isFraud) ...[
                 const SizedBox(height: 8),
                 Container(
@@ -271,7 +335,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                       Icon(Icons.info_outline, size: 16, color: Colors.red[800]),
                       const SizedBox(width: 6),
                       Text(
-                        'Transaction suspecte',
+                        transaction.isSuspicious ? 'Transaction suspecte' : 'Transaction frauduleuse détectée',
                         style: TextStyle(
                           color: Colors.red[800],
                           fontSize: 12,
@@ -289,6 +353,59 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
     );
   }
 
+  String _getTransactionType(LocalTransaction transaction) {
+    return transaction.typeDisplay; // Utilise le getter du nouveau modèle
+  }
+
+  void _showTransactionDetails(LocalTransaction transaction) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Transaction ${transaction.reference ?? transaction.id}'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildDetailRow('Montant', '\$${transaction.amount ?? '0.00'}'),
+              _buildDetailRow('Type', transaction.typeDisplay),
+              _buildDetailRow('Statut', transaction.statusDisplay),
+              _buildDetailRow('Description', transaction.description ?? 'N/A'),
+              _buildDetailRow('Référence', transaction.reference ?? 'N/A'),
+              _buildDetailRow('Date', transaction.dateEnregistrement ?? 'N/A'),
+              if (transaction.confidenceScore != null)
+                _buildDetailRow('Score de confiance', '${(transaction.confidenceScore! * 100).toStringAsFixed(1)}%'),
+              if (transaction.fraudFlagReason?.isNotEmpty == true)
+                _buildDetailRow('Raison de fraude', transaction.fraudFlagReason!),
+              if (transaction.isVerified == true)
+                Container(
+                  margin: const EdgeInsets.only(top: 8),
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.verified, color: Colors.blue[800], size: 16),
+                      const SizedBox(width: 8),
+                      const Text('Transaction vérifiée', style: TextStyle(fontSize: 12)),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Fermer'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildDetailRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -301,11 +418,13 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
               fontSize: 14,
             ),
           ),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ],

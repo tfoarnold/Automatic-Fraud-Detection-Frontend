@@ -1,6 +1,7 @@
 import 'package:automatic_fraud_detection/providers/auth_provider.dart';
 import 'package:automatic_fraud_detection/widgets/custom_text_field.dart';
 import 'package:automatic_fraud_detection/widgets/login_button.dart';
+import 'package:automatic_fraud_detection/main.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,9 +18,20 @@ class _LoginScreenState extends State<LoginScreen> {
   bool obscurePass = true;
 
   @override
+  void dispose() {
+    _phone.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final authProvider = Provider.of<AuthProvider>(context);
+
+    if (authProvider.isLoading) {
+      return const LoadingWidget(message: "Connexion en cours...");
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -120,6 +132,41 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
                         ),
+                        // AFFICHAGE DU MESSAGE D'ERREUR ICI
+                        if (authProvider.error.isNotEmpty)
+                          Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.only(top: 12),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12, 
+                              vertical: 8
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.red.shade50,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(color: Colors.red.shade200),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.error_outline,
+                                  color: Colors.red.shade600,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    authProvider.error,
+                                    style: TextStyle(
+                                      color: Colors.red.shade700,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         const SizedBox(height: 20),
                         Align(
                           alignment: Alignment.centerRight,
