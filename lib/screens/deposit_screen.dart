@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
 
 class DepositScreen extends StatelessWidget {
   final TextEditingController _amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dépôt'),
@@ -15,42 +19,16 @@ class DepositScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Montant à déposer',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
+            const Text('Montant à déposer', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
             TextField(
               controller: _amountController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 prefixText: '\$ ',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                 hintText: '0.00',
               ),
-            ),
-            const SizedBox(height: 30),
-            const Text(
-              'Méthode de dépôt',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 15),
-            _buildPaymentMethod(
-              icon: Icons.account_balance,
-              title: 'Virement bancaire',
-              subtitle: '2-3 jours ouvrables',
-            ),
-            _buildPaymentMethod(
-              icon: Icons.credit_card,
-              title: 'Carte de crédit',
-              subtitle: 'Instantané',
-            ),
-            _buildPaymentMethod(
-              icon: Icons.mobile_friendly,
-              title: 'Mobile Money',
-              subtitle: 'Instantané',
             ),
             const Spacer(),
             SizedBox(
@@ -59,39 +37,38 @@ class DepositScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue[800],
                   padding: const EdgeInsets.symmetric(vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                 ),
-                onPressed: () {
-                  // Logique de dépôt
-                  Navigator.pop(context);
+                onPressed: authProvider.isLoading
+                    ? null
+                    : () async {
+                  final amount = double.tryParse(_amountController.text) ?? 0;
+
+                  final success = await authProvider.createTransaction(
+                    type: 'CASH_IN',
+                    step: 1,
+                    amount: amount,
+                    destinationPhone: authProvider.userPhone, // Dépôt sur son propre compte
+                  );
+
+                  if (success) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Dépôt effectué avec succès')),
+                    );
+                    Navigator.pop(context);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(authProvider.error)),
+                    );
+                  }
                 },
-                child: const Text(
-                  'Confirmer le dépôt',
-                  style: TextStyle(fontSize: 18, color: Colors.white),
-                ),
+                child: authProvider.isLoading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Text('Confirmer le dépôt', style: TextStyle(fontSize: 18, color: Colors.white)),
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildPaymentMethod({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-  }) {
-    return ListTile(
-      leading: Icon(icon, size: 30, color: Colors.blue[800]),
-      title: Text(title),
-      subtitle: Text(subtitle),
-      trailing: Radio(
-        value: title,
-        groupValue: title,
-        onChanged: (value) {},
       ),
     );
   }

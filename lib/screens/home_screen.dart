@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(height: 10),
           _buildWelcomeSection(),
           const SizedBox(height: 25),
-          _buildBalanceAndBankCard(),
+          _buildBalanceAndBankCard(context),
           const SizedBox(height: 30),
           _buildQuickActions(),
           const SizedBox(height: 30),
@@ -110,87 +110,95 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildBalanceAndBankCard() {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      margin: const EdgeInsets.all(20),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 2,
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF1E3C72), Color(0xFF2A5298)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.blue.withOpacity(0.2),
-                      blurRadius: 10,
-                      offset: const Offset(0, 6),
+  Widget _buildBalanceAndBankCard(BuildContext context) {
+    return Consumer<AuthProvider>(
+      builder: (context, authProvider, child) {
+        String balance = authProvider.userBalance; // <-- récupération du solde
+
+        return Card(
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          margin: const EdgeInsets.all(20),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF1E3C72), Color(0xFF2A5298)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blue.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.credit_card, color: Colors.white.withOpacity(0.7)),
-                        const SizedBox(width: 3),
-                        const Text(
-                          'Current Balance',
-                          style: TextStyle(
-                            fontSize: 17,
-                            color: Colors.white54,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(Icons.credit_card,
+                                color: Colors.white.withOpacity(0.7)),
+                            const SizedBox(width: 3),
+                            const Text(
+                              'Current Balance',
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.white54,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          '\$ ${balance}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                            letterSpacing: 2,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      '\$16,567.00',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28,
-                        letterSpacing: 2,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
-                          'Exp',
-                          style: TextStyle(color: Colors.white70, fontSize: 12),
-                        ),
-                        Text(
-                          '02/25',
-                          style: TextStyle(color: Colors.white, fontSize: 14),
+                        const SizedBox(height: 24),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text(
+                              'Exp',
+                              style: TextStyle(color: Colors.white70, fontSize: 12),
+                            ),
+                            Text(
+                              '02/25',
+                              style: TextStyle(color: Colors.white, fontSize: 14),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
+
 
   Widget _buildQuickActions() {
     return Row(
